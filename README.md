@@ -22,5 +22,7 @@ windows用到的cmd命令 dir显示文件 dir /a:h 显示隐藏文件<br>
 我们的git config文件是隐藏文件，如果你用linux那就非常方便，直接vim 修改.git/config文件<br>
 运行以下两行命令，这样我们的代码就提交到github了<br>
 git remote add origin git@github.com:yidou120/community.git<br>
-git push -u origin master
+git push -u origin master<br>
+下面这行命令是如果我们有文件修改了，直接追加的形式提交
+git commit --amend --no-edit
 
