@@ -24,5 +24,9 @@ windows用到的cmd命令 dir显示文件 dir /a:h 显示隐藏文件<br>
 git remote add origin git@github.com:yidou120/community.git<br>
 git push -u origin master<br>
 下面这行命令是如果我们有文件修改了，直接追加的形式提交
-git commit --amend --no-edit
-
+git commit --amend --no-edit<br>
+[Spring文档](https://spring.io/guides/gs/serving-web-content/)
+<br>
+idea用到的快捷键 ctrl+alt+v 在new对象的时候生成他的变量名；
+<br>
+ctrl+alt+o 移除无用包
