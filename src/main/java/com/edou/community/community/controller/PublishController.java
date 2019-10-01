@@ -1,13 +1,16 @@
 package com.edou.community.community.controller;
 
+import com.edou.community.community.dto.QuestionDTO;
 import com.edou.community.community.dto.UserInfo;
 import com.edou.community.community.mapper.QuestionMapper;
 import com.edou.community.community.model.Question;
 import com.edou.community.community.model.User;
+import com.edou.community.community.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -22,7 +25,11 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class PublishController {
     @Autowired
+    QuestionService questionService;
+
+    @Autowired
     QuestionMapper questionMapper;
+
     @GetMapping("/publish")
     public String publish(){
         return "publish";
@@ -31,6 +38,7 @@ public class PublishController {
     public String doPublish(@RequestParam("title") String title,
                             @RequestParam("description") String description,
                             @RequestParam("tag") String tag,
+                            @RequestParam("id") Integer id,
                             HttpServletRequest request,
                             Model model){
         HttpSession session = request.getSession();
@@ -43,11 +51,20 @@ public class PublishController {
         question.setTitle(title);
         question.setDescription(description);
         question.setTag(tag);
-        question.setGmtCreate(System.currentTimeMillis());
-        question.setGmtModified(question.getGmtCreate());
-        question.setCreator(user.getId());
-
-        questionMapper.insertQuestion(question);
+        question.setCreator(Integer.parseInt(user.getAccountId()));
+        question.setId(id);
+        questionService.updateOrCreate(question);
         return "redirect:/";
+    }
+
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id") Integer id,
+                       Model model){
+        QuestionDTO questionById = questionService.findQuestionById(id);
+        model.addAttribute("title",questionById.getTitle());
+        model.addAttribute("description",questionById.getDescription());
+        model.addAttribute("tag",questionById.getTag());
+        model.addAttribute("id",questionById.getId());
+        return "publish";
     }
 }

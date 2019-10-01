@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="${question.title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- 新 Bootstrap 核心 CSS 文件 -->
+    <link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--    <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-theme.css" rel="stylesheet">
+        <script type="text/javascript" src="js/jquery-1.11.0.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>-->
+    <link href="/css/community.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{navigation :: nav}"></div>
+
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12">
+            <h3 th:text="${question.title}"></h3>
+            <div class="questionAbout">
+                作者：<span th:text="${question.user.name}"></span> |
+                发布时间：<span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd hh:mm:ss a E')}"></span> |
+                阅读数：<span th:text="${question.viewCount}"></span>
+            </div>
+            <hr>
+            <span th:text="${question.description}"></span>
+            <hr>
+            <a th:href="@{'/publish/'+${question.id}}" class="menu" th:if="${session.user!=null&&session.user.accountId == question.creator+''}">
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                <span>编辑</span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="media rightAbout">
+                <div class="media-left">
+                    <img class="media-object img-circle" th:src="@{${question.user.getAvatarUrl()}}">
+                </div>
+                <div class="media-body rightAboutName">
+                    <span th:text="${question.user.name}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

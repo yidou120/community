@@ -18,3 +18,20 @@ body{
     font-weight:normal;
     color:#999
 }
+.profile .section{
+    margin-top: 15px;
+}
+.questionAbout{
+    font-size:13px;
+    font-weight:normal;
+    color:#999
+}
+div.media.rightAbout{
+    margin-top: 32px;
+}
+div.media-body.rightAboutName{
+    padding-top: 11px;
+}
+.menu{
+    color: #999999;
+}

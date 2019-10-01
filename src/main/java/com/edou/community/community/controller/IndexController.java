@@ -30,20 +30,6 @@ public class IndexController {
                         @RequestParam(name = "size",defaultValue = "5") Integer size,
                         HttpServletRequest request,
                         Model model){
-        Cookie[] cookies = request.getCookies();
-        if(cookies!=null||!cookies.equals("")) {
-            for (Cookie cookie : cookies) {
-                String name = cookie.getName();
-                if (name.equals("token")) {
-                    String value = cookie.getValue();
-                    User user = userMapper.getUserByToken(value);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-            }
-        }
         //获取发表问题数据
         PaginationDTO paginationDTO = questionService.selectAll(page,size);
         model.addAttribute("paginationDTO",paginationDTO);

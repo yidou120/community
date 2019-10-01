@@ -29,4 +29,7 @@ git commit --amend --no-edit<br>
 <br>
 idea用到的快捷键 ctrl+alt+v 在new对象的时候生成他的变量名；
 <br>
-ctrl+alt+o 移除无用包
+ctrl+alt+o 移除无用包<br>
+ctrl+alt+l 格式化代码<br>
+ctrl+f12 show methods
+查看子类 alt+ctrl+b

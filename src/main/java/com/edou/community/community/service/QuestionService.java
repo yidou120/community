@@ -35,7 +35,7 @@ public class QuestionService {
         List<QuestionDTO> questionDTOS = new ArrayList<>();
         for (Question question : questions) {
             Integer creator = question.getCreator();
-            User user = userMapper.findByID(creator);
+            User user = userMapper.findByAccountId(String.valueOf(creator));
             QuestionDTO questionDTO = new QuestionDTO();
             BeanUtils.copyProperties(question, questionDTO);
             questionDTO.setUser(user);
@@ -43,5 +43,46 @@ public class QuestionService {
         }
         paginationDTO.setQuestionDTOS(questionDTOS);
         return paginationDTO;
+    }
+
+    public PaginationDTO findQuestionByUser(String accountId, Integer page, Integer size) {
+        //查找属于该用户的所有问题
+        Integer totalCount = questionMapper.totalCountByUser(Integer.parseInt(accountId));
+        PaginationDTO paginationDTOByUser = new PaginationDTO(totalCount,page,size);
+        //计算偏移量,分页查找
+        Integer offset = (page-1)*size;
+        List<Question> questions = questionMapper.selectByPageAndUser(Integer.parseInt(accountId), offset, size);
+        List<QuestionDTO> questionDTOS = new ArrayList<>();
+        for (Question question : questions) {
+            Integer creator = question.getCreator();
+            User user = userMapper.findByAccountId(String.valueOf(creator));
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(question, questionDTO);
+            questionDTO.setUser(user);
+            questionDTOS.add(questionDTO);
+        }
+        paginationDTOByUser.setQuestionDTOS(questionDTOS);
+        return paginationDTOByUser;
+    }
+
+    public QuestionDTO findQuestionById(Integer id) {
+        Question question = questionMapper.findQuestionById(id);
+        Integer creator = question.getCreator();
+        User user = userMapper.findByAccountId(String.valueOf(creator));
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
+    }
+
+    public void updateOrCreate(Question question) {
+        if(question.getId()==null) {
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.insertQuestion(question);
+        }else {
+            question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
     }
 }

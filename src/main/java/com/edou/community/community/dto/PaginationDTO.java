@@ -62,7 +62,7 @@ public class PaginationDTO {
             pages.add(i);
         }
         //是否显示跳转上页和下页
-        if(currentPage==1){
+        if(currentPage==1||totalCount==0){
             hasPrevious = false;
         }
         if(currentPage==totalPage){
