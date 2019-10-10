@@ -33,3 +33,4 @@ ctrl+alt+o 移除无用包<br>
 ctrl+alt+l 格式化代码<br>
 ctrl+f12 show methods
 查看子类 alt+ctrl+b
+<br>mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
