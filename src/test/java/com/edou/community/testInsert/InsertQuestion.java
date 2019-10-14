@@ -28,7 +28,8 @@ public class InsertQuestion {
             question.setGmtCreate(System.currentTimeMillis());
             question.setGmtModified(question.getGmtCreate());
             question.setTag("标签1,标签2");
-            questionMapper.insertQuestion(question);
+            questionMapper.insert(question);
+//            questionMapper.insertQuestion(question);
             System.out.println("插入成功"+i);
         }
     }

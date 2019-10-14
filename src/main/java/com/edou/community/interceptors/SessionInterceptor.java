@@ -2,6 +2,7 @@ package com.edou.community.interceptors;
 
 import com.edou.community.mapper.UserMapper;
 import com.edou.community.model.User;
+import com.edou.community.model.UserExample;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author 中森明菜
@@ -27,9 +29,13 @@ public class SessionInterceptor implements HandlerInterceptor {
                 String name = cookie.getName();
                 if (name.equals("token")) {
                     String value = cookie.getValue();
-                    User user = userMapper.getUserByToken(value);
-                    if (user != null) {
-                        request.getSession().setAttribute("user", user);
+                    UserExample example = new UserExample();
+                    example.createCriteria()
+                            .andTokenEqualTo(value);
+                    List<User> users = userMapper.selectByExample(example);
+//                    User user = userMapper.getUserByToken(value);
+                    if (users.size() != 0) {
+                        request.getSession().setAttribute("user", users.get(0));
                         break;
                     }
                 }

@@ -6,6 +6,7 @@
 <generatorConfiguration>
 
     <context id="MysqlTables" targetRuntime="MyBatis3">
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/community"
                         userId="root"
